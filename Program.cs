@@ -1,6 +1,11 @@
+using Microsoft.EntityFrameworkCore;
+using PuranoKitab.Entities;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+builder.Services.AddDbContext<ApplicationDbContext>(opts => opts.UseSqlServer(builder.Configuration["ConnectionString:DefaultConnection"]));
 
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllersWithViews();

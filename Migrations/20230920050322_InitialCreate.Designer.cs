@@ -11,8 +11,8 @@ using PuranoKitab.Entities;
 namespace PuranoKitab.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230914082219_AddTable_Author")]
-    partial class AddTable_Author
+    [Migration("20230920050322_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -48,6 +48,29 @@ namespace PuranoKitab.Migrations
                     b.ToTable("Authors");
                 });
 
+            modelBuilder.Entity("PuranoKitab.Entities.AuthorBook", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("AuthorId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("BookId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
+
+                    b.HasIndex("BookId");
+
+                    b.ToTable("AuthorBooks");
+                });
+
             modelBuilder.Entity("PuranoKitab.Entities.Book", b =>
                 {
                     b.Property<int>("Id")
@@ -74,6 +97,25 @@ namespace PuranoKitab.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Books");
+                });
+
+            modelBuilder.Entity("PuranoKitab.Entities.AuthorBook", b =>
+                {
+                    b.HasOne("PuranoKitab.Entities.Author", "Author")
+                        .WithMany()
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PuranoKitab.Entities.Book", "Book")
+                        .WithMany()
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Author");
+
+                    b.Navigation("Book");
                 });
 #pragma warning restore 612, 618
         }

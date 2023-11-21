@@ -4,6 +4,17 @@ using PuranoKitab.Entities;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+        builder =>
+        {
+            builder.WithOrigins("https://localhost:44461")
+                                .AllowAnyHeader()
+                                .AllowAnyMethod();
+        });
+});
+
 
 builder.Services.AddDbContext<ApplicationDbContext>(opts => opts.UseSqlServer(builder.Configuration["ConnectionString:DefaultConnection"]));
 
@@ -25,6 +36,7 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+app.UseCors();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();

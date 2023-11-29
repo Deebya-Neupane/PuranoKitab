@@ -1,19 +1,17 @@
 import React, { Component, useState } from "react";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-//import { useHistory } from 'react-router-dom';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const FormPage = () => {
   const [firstName, setFirstName] = useState(null);
   const [lastName, setLastName] = useState(null);
   const [email, setEmail] = useState(null);
-  //const history = useHistory();
-
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    //history.push(`/author/`);
 
     var newData = {
       firstName: firstName,
@@ -23,20 +21,20 @@ const FormPage = () => {
     axios
       .post("https://localhost:7186/api/Author", newData)
       .then((response) => {
-        console.log(response);
+        if (response.status == 200) {
+          navigate(`/author`);
+        }
       });
 
-      toast.success('New record added successfully!', {
-        position: 'top-right',
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-     });
-
-
+    toast.success("New record added successfully!", {
+      position: "top-right",
+      autoClose: 50000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
   };
   const handelFirstNameChange = (e) => {
     setFirstName(e.target.value);
@@ -49,6 +47,7 @@ const FormPage = () => {
   const handelEmailChange = (e) => {
     setEmail(e.target.value);
   };
+
   return (
     <form onSubmit={handleSubmit}>
       <div class="row">
@@ -100,7 +99,7 @@ const FormPage = () => {
             Submit
           </button>
         </div>
-        <ToastContainer/>
+        <ToastContainer />
       </div>
     </form>
   );

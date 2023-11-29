@@ -1,8 +1,8 @@
-import { Author } from "./components/Author";
 import { Counter } from "./components/Counter";
 import { FetchData } from "./components/FetchData";
 import { Home } from "./components/Home";
 import FormPage from "./components/FormPage";
+import Author from "./components/Author";
 
 const AppRoutes = [
   {
@@ -24,7 +24,7 @@ const AppRoutes = [
   {
     path: "/create-new",
     element: <FormPage />,
-  },
+  }
 ];
 
 export default AppRoutes;

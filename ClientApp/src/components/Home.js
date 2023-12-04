@@ -1,14 +1,13 @@
-import React, { Component } from 'react';
 
-export class Home extends Component {
-  static displayName = Home.name;
+import React from 'react'
+import "./Home.css";
 
-  render() {
-    return (
-      <div>
-        <h1>Hello, world!</h1>
-        
-      </div>
-    );
-  }
+const Home = () => {
+  return (
+    <div className='hero-container'>
+      <video src="/Video/video.mp4" autoPlay loop muted/>
+    </div>
+  )
 }
+
+export default Home

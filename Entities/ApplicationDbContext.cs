@@ -4,6 +4,8 @@ namespace PuranoKitab.Entities
 {
     public class ApplicationDbContext : DbContext
     {
+        internal IEnumerable<object> books;
+
         public ApplicationDbContext(DbContextOptions options)
            : base(options)
         {

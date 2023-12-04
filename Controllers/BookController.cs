@@ -24,14 +24,12 @@ namespace PuranoKitab.Controllers
         }
 
 
-
-        [HttpGet("GetAllBooks")]
+        [HttpGet]
         public ActionResult GetAllBooks()
         {
-            var allBooks = _dbcontext.Books.ToList();
-            return Ok(allBooks);
+            var allbooks = _dbcontext.Books.ToList();
+            return Ok(allbooks);
         }
-
 
 
         [HttpDelete]
@@ -56,18 +54,19 @@ namespace PuranoKitab.Controllers
                 return BadRequest(ex.Message);
             }
         }
-
-        [HttpGet("GetAllBooksGreaterthan100pages")]
-        public ActionResult GetAllBooksGreaterthan100pages()
+        [HttpGet("GetBookById")]
+        public ActionResult GetBookById([FromQuery] int id)
         {
-            var AllBooksGreaterthan100pages = _dbcontext.Books.Where(x => x.TotalPages >= 100).ToList();
-            return Ok(AllBooksGreaterthan100pages);
+            var book = _dbcontext.Books.Where(x => x.Id == id).FirstOrDefault();
+            return Ok(book);
         }
 
         [HttpPut]
         public async Task<ActionResult> UpdateBookAsync([FromBody] Book book)
         {
             var existingbook = _dbcontext.Books.Where(x => x.Id == book.Id).FirstOrDefault();
+            if (existingbook == null)
+                return BadRequest("Record not found");
             try
             {
                 existingbook.Name = book.Name;
@@ -84,6 +83,8 @@ namespace PuranoKitab.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+
     }
 }
 

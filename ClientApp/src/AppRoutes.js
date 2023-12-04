@@ -1,8 +1,10 @@
-import { Counter } from "./components/Counter";
-import { FetchData } from "./components/FetchData";
-import { Home } from "./components/Home";
-import FormPage from "./components/FormPage";
+import Book  from "./components/Book";
+import CreateBookPage   from "./components/CreateBookPage";
+import EditBookPage from "./components/EditBookPage";
+import Home from "./components/Home";
 import Author from "./components/Author";
+import CreateAuthorPage from "./components/CreateAuthorPage";
+import EditAuthorPage from "./components/EditAuthorPage";
 
 const AppRoutes = [
   {
@@ -10,20 +12,28 @@ const AppRoutes = [
     element: <Home />,
   },
   {
-    path: "/counter",
-    element: <Counter />,
+    path: "/book",
+    element: <Book />,
   },
   {
-    path: "/fetch-data",
-    element: <FetchData />,
+    path: "/create-book",
+    element: <CreateBookPage />,
+  },
+  {
+    path: "/edit-book/:id",
+    element: <EditBookPage />,
   },
   {
     path: "/author",
     element: <Author />,
   },
   {
-    path: "/create-new",
-    element: <FormPage />,
+    path: "/create-author",
+    element: <CreateAuthorPage />,
+  },
+  {
+    path: "/edit-author/:id",
+    element: <EditAuthorPage />,
   }
 ];
 

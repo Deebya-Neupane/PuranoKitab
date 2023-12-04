@@ -54,7 +54,6 @@ const Author = () => {
         )
         .then(getAllAuthors);
       {
-        alert("Data deleted successfully");
         setOpenDeleteConfirmationBox(false);
       }
     }
@@ -64,7 +63,7 @@ const Author = () => {
     <div>
       <h1>Authors</h1>
 
-      <Link to="/create-new" class="btn btn-primary">
+      <Link to="/create-author" class="btn btn-primary">
         Add
       </Link>
 
@@ -85,7 +84,9 @@ const Author = () => {
                 <td>{x.lastName}</td>
                 <td>{x.email}</td>
                 <td>
-                  <Link class="btn btn-success">Edit</Link>
+                  <Link to={`/edit-author/${x.id}`} className="btn btn-success">
+                    Edit
+                  </Link>
 
                   <Link
                     onClick={() => showDeleteConfirmationBox(x.id)}

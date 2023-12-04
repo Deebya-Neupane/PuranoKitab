@@ -17,9 +17,16 @@ namespace PuranoKitab.Controllers
         [HttpPost]
         public ActionResult Post([FromBody] Author author)
         {
-            _dbcontext.Authors.Add(author);
-            _dbcontext.SaveChanges();
-            return Ok("Data Saved Successfully");
+            try
+            {
+                _dbcontext.Authors.Add(author);
+                _dbcontext.SaveChanges();
+                return Ok("Data Saved Successfully");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpGet]
@@ -52,17 +59,19 @@ namespace PuranoKitab.Controllers
             }
         }
 
-        [HttpGet("GetAllAuthorsWithLastnameNeupane")]
-        public ActionResult GetAllAuthorsWithLastnameNeupane()
+        [HttpGet("GetAuthorById")]
+        public ActionResult GetAuthorById([FromQuery] int id)
         {
-            var AllAuthorsWithLastnameNeupane = _dbcontext.Authors.Where(x => x.LastName == "Neupane").ToList();
-            return Ok(AllAuthorsWithLastnameNeupane);
+            var author = _dbcontext.Authors.Where(x => x.Id == id).FirstOrDefault();
+            return Ok(author);
         }
 
         [HttpPut]
         public async Task<ActionResult> UpdateAuthorAsync([FromBody] Author author)
         {
             var existingauthor = _dbcontext.Authors.Where(x => x.Id == author.Id).FirstOrDefault();
+            if (existingauthor == null)
+                return BadRequest("Record not found");
             try
             {
                 existingauthor.FirstName = author.FirstName;
